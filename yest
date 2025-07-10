@@ -1,0 +1,22 @@
+Initial approach steps for AL2 to Al2023
+Scenarios:
+ * If app team is ok to use different hostname for al2023, then we have straight forward procedure to launch a new instance, setup and handover.
+ * If app team is ok to use different hostname for al2023 but if there is dependency with old hostname
+   a. then we follow procedure to launch a new instance, and setup DNS alias in route53 (with old hostname) and handover.
+ * If app team have a strict dependency on old hostname to be used for new al2023 hostname, then we are currently checking on the procedure with below
+   a. Preparation: We are planning to prepare the terraform module for migration to do the following steps, since the old ec2 instance should be down throughout the migration process.
+ * Script will Collect the fstab entries Bring down the old AL2 server.
+ * Change dns hostname ec2 instance tag to "<hostname>-old" for AL2 ec2 instance
+ * Script will wait for the the next execution till "<hostname>-old" reflects in route53(lambda job trigger will do the update)
+ * create snapshots and volumes of the ebs volume of old AL2 box
+ * create a new ec2 instance with original hostname and attach the volumes created by step 4
+ * mirror the ec2 instance tags like as old EC2 box
+ * assign the security groups like old AL2 server
+ * automation process will run the application ansible playbook to configure app related unix level setup
+ * handoff to app team to migrate application.
+
+b. Backout: in case of backout we can powerdown the new al2023 box and change the dns hostname tag entry as below
+ * change AL2023 dns hostname tag as hostname-mig2023 and shutdown.
+ * wait for the the next execution till "<hostname>-old" reflects in route53(lambda job trigger will do the update)
+ * change AL2 dns hostname tag from hostname-old to original hostname and bringup
+
