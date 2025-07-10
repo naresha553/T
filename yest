@@ -20,3 +20,20 @@ b. Backout: in case of backout we can powerdown the new al2023 box and change th
  * wait for the the next execution till "<hostname>-old" reflects in route53(lambda job trigger will do the update)
  * change AL2 dns hostname tag from hostname-old to original hostname and bringup
 
+
+
+Need to know related to  AWS’s recommended best practices for migrating from AL2 to AL2023,  and the current plan we have mentioned, need guidance if this approach for is fine to move on?
+
+do we have any AWS tools that can help automate or simplify this type of migration?
+
+Are there any limitations when re-attaching AL2 EBS volumes to AL2023 instances?
+
+Any recommendations for handling security group assignments during migration?
+
+Would need to know if any customers approached with any common issues related to al2-al2023 migration?
+
+Any recommended approach for minimizing downtime during hostname cutover?
+
+AWS plan for future Amazon Linux os versions releases, can we have inplace upgrade in future?
+
+
